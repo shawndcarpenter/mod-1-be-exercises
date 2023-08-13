@@ -27,7 +27,7 @@ RSpec.describe Centaur do
     expect(centaur.cranky?).to be false
   end
 
-  it 'when first created, it is standing up' do
+  it 'when first created, xit is standing up' do
     centaur = Centaur.new('George', 'Palomino')
     expect(centaur.standing?).to be true
   end
@@ -39,7 +39,7 @@ RSpec.describe Centaur do
     centaur.run
     centaur.shoot
     centaur.run
-
+    # require "pry"; binding.pry
     expect(centaur.cranky?).to be true
   end
 
@@ -53,7 +53,7 @@ RSpec.describe Centaur do
     expect(centaur.shoot).to eq('NO!')
   end
 
-  it 'will not sleep when it is standing' do
+  it 'will not sleep when xit is standing' do
     centaur = Centaur.new('George', 'Palomino')
 
     expect(centaur.sleep).to eq('NO!')
@@ -113,14 +113,57 @@ RSpec.describe Centaur do
   end
 
   it 'becomes rested after drinking a potion' do
-    # your code here
+    centaur = Centaur.new('George', 'Palomino')
+
+    centaur.shoot
+    centaur.run
+    centaur.shoot
+
+    expect(centaur.cranky?).to be true
+
+    centaur.drink_potion
+
+    expect(centaur.cranky?).to be false
+
+    expect(centaur.shoot).to eq('Twang!!!')
+    expect(centaur.run).to eq('Clop clop clop clop!')
   end
 
   it 'can only drink a potion whilst standing' do
-    # your code here
+    centaur = Centaur.new('George', 'Palomino')
+
+    centaur.shoot
+    centaur.run
+    centaur.shoot
+
+    expect(centaur.cranky?).to be true
+
+    centaur.lay_down
+
+    centaur.drink_potion
+
+    expect(centaur.drink_potion).to eq('NO!')
+
+    centaur.stand_up
+
+    centaur.drink_potion
+
+    expect(centaur.cranky?).to be false
+
+    expect(centaur.shoot).to eq('Twang!!!')
+    expect(centaur.run).to eq('Clop clop clop clop!')
   end
 
   it 'gets stick if a potion is drunk while rested' do
-    # your code here
+    centaur = Centaur.new('George', 'Palamino')
+
+    expect(centaur.cranky?).to be false
+
+    centaur.drink_potion
+
+    expect(centaur.drink_potion).to eq('*vomits*')
+
+    expect(centaur.cranky?).to be true
+
   end
 end

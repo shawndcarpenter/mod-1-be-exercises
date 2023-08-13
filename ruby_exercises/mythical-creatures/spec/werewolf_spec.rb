@@ -50,10 +50,20 @@ RSpec.describe Werewolf do
   end
 
   it 'is not hungry by default' do
+    werewolf = Werewolf.new('David', 'London')
+    expect(werewolf.hungry?).to be false
+
     # your code here
   end
 
   it 'becomes hungry after changing to a werewolf' do
+    werewolf = Werewolf.new('David', 'London')
+    expect(werewolf.hungry?).to be false
+
+    werewolf.change!
+
+    expect(werewolf.wolf?).to be true
+    expect(werewolf.hungry?).to be true
     # your code here
   end
 
@@ -66,19 +76,68 @@ RSpec.describe Werewolf do
   end
 
   it 'consumes a victim' do
+    werewolf = Werewolf.new('David', 'London')
+    victim = Victim.new
+    werewolf.change!
+
+    werewolf.consume!(victim)
+
+    expect(werewolf.victims_consumed?).to be 1
     # your code here
+
   end
 
   it 'cannot consume a victim if it is in human form' do
+   
+    werewolf = Werewolf.new('David', 'London')
+    victim = Victim.new
+    expect(werewolf.human?).to be true
+    werewolf.consume!(victim)
+
+    expect(werewolf.victims_consumed?).to be 0
+    
+    werewolf.change!
+
+    werewolf.consume!(victim)
+    expect(werewolf.victims_consumed?).to be 1
     # your code here
+
   end
 
   it 'a werewolf that has consumed a human being is no longer hungry' do
-    # your code here
+    werewolf = Werewolf.new('David', 'London')
+    victim = Victim.new
+
+    expect(werewolf.human?).to be true
+    werewolf.consume!(victim)
+
+    expect(werewolf.victims_consumed?).to be 0
+    
+    werewolf.change!
+
+    expect(werewolf.hungry?).to be true
+
+    werewolf.consume!(victim)
+
+    expect(werewolf.victims_consumed?).to be 1
+
+    expect(werewolf.hungry?).to be false
   end
 
   it 'a werewolf who has consumed a victim makes the victim dead' do
     # your code here
+    werewolf = Werewolf.new('David', 'London')
+    victim = Victim.new
+    
+    werewolf.change!
+
+    werewolf.consume!(victim)
+
+    expect(werewolf.victims_consumed?).to be 1
+
+    expect(werewolf.hungry?).to be false
+
+    expect(victim.status).to eq :dead
   end
 
 end

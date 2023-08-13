@@ -17,6 +17,7 @@ RSpec.describe Wizard do
     expect(wizard.bearded?).to be true
   end
 
+  # why did it matter when I changed bearded to a symbol in the lib file?
   it 'is not always bearded' do
     wizard = Wizard.new('Valerie', bearded: false)
     expect(wizard.bearded?).to be false
@@ -33,16 +34,27 @@ RSpec.describe Wizard do
   end
 
   it 'starts rested' do
+    wizard = Wizard.new('Caroline', bearded: false)
+    expect(wizard.rested?).to be true
     # create wizard
     # .rested? returns true
   end
 
   it 'can cast spells' do
+    wizard = Wizard.new('Sheherlin', bearded: false)
+    wizard.cast
+    expect(wizard.cast).to eq("MAGIC MISSILE!")
     # create wizard
     # .cast returns "MAGIC MISSILE!"
   end
 
   it 'gets tired after casting three spells' do
+    wizard = Wizard.new('Arthur', bearded: false)
+    wizard.cast
+    wizard.cast
+    expect(wizard.rested?).to be true
+    wizard.cast
+    expect(wizard.rested?).to be false
     # create wizard
     # casts spell twice
     # check if wizard is rested
